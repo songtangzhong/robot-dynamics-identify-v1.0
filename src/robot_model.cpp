@@ -47,7 +47,7 @@ void RobotModel::InitModel(const unsigned int DOF)
     Iyz.resize(dof);
     Izz.resize(dof);
 
-    g=-9.81;
+    g = -9.81;
 
     Z << 0, 0, 1;
 
@@ -61,14 +61,14 @@ void RobotModel::InitModel(const unsigned int DOF)
     R_T.resize(dof+1);
 
     w.resize(dof+1);
-    dw.resize(dof+1);
+    wDot.resize(dof+1);
     a.resize(dof+1);
     F.resize(dof+1);
     f.resize(dof+1);
     n.resize(dof+1);
 
     w(0) << 0, 0, 0;
-    dw(0) << 0, 0, 0;
+    wDot(0) << 0, 0, 0;
     a(0) << 0, 0, g;
     
     f(dof) << 0, 0, 0;
@@ -77,7 +77,7 @@ void RobotModel::InitModel(const unsigned int DOF)
     tau.resize(dof);
 }
 
-void RobotModel::SetKinematicParameters(const MatrixXd param)
+void RobotModel::SetKinematicsParameters(const MatrixXd param)
 {
     d = param.row(0).transpose();
     alpha = param.row(1).transpose();
@@ -131,15 +131,15 @@ VectorXd RobotModel::calcu_inv_dyn(const VectorXd q, const VectorXd qDot, const 
     for (unsigned int i=1; i<=dof; i++)
     {
         w(i) = R(i-1)*w(i-1)+qDot(i-1)*Z;
-        dw(i) = R(i-1)*dw(i-1)+R(i-1)*w(i-1).cross(qDot(i-1)*Z)+qDDot(i-1)*Z;
-        a(i) = R(i-1)*(dw(i-1).cross(P(i-1))+w(i-1).cross(w(i-1).cross(P(i-1)))+a(i-1));
-        F(i) = dw(i).cross(mrc(i-1))+w(i).cross(w(i).cross(mrc(i-1)))+m(i-1)*a(i);
+        wDot(i) = R(i-1)*wDot(i-1)+R(i-1)*w(i-1).cross(qDot(i-1)*Z)+qDDot(i-1)*Z;
+        a(i) = R(i-1)*(wDot(i-1).cross(P(i-1))+w(i-1).cross(w(i-1).cross(P(i-1)))+a(i-1));
+        F(i) = wDot(i).cross(mrc(i-1))+w(i).cross(w(i).cross(mrc(i-1)))+m(i-1)*a(i);
     }
     
     for (int i=dof-1; i>=0; i--)
     {
         f(i)=R_T(i+1)*f(i+1)+F(i+1);
-        n(i)=R_T(i+1)*n(i+1)+P(i+1).cross(R_T(i+1)*f(i+1))+I(i)*dw(i+1)+w(i+1).cross(I(i)*w(i+1))-a(i+1).cross(mrc(i));
+        n(i)=R_T(i+1)*n(i+1)+P(i+1).cross(R_T(i+1)*f(i+1))+I(i)*wDot(i+1)+w(i+1).cross(I(i)*w(i+1))-a(i+1).cross(mrc(i));
         tau(i)=n(i).transpose()*Z;
     }
 
