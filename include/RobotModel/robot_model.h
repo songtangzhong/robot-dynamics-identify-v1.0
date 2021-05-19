@@ -25,9 +25,14 @@ public:
 
     VectorXd calcu_inv_dyn(const VectorXd q, const VectorXd qDot, const VectorXd qDDot);
 
-private:
     int dof;
 
+    double g;
+
+    // [mi mrcxi mrcyi mrczi Ixxi Ixyi Ixzi Iyyi Iyzi Izzi]'
+    unsigned int Psi_num;
+
+private:
     // Standard D-H parameters
     VectorXd theta;    // z rotation
     VectorXd d;        // z translation
@@ -35,16 +40,11 @@ private:
     VectorXd r;        // x translation
     VectorXd offset;
 
-    // [mi mrcxi mrcyi mrczi Ixxi Ixyi Ixzi Iyyi Iyzi Izzi]'
-    unsigned int Psi_num;
-
     VectorXd m;
 
     VectorXd mrcx; VectorXd mrcy; VectorXd mrcz;
 
     VectorXd Ixx; VectorXd Ixy; VectorXd Ixz; VectorXd Iyy; VectorXd Iyz; VectorXd Izz;
-
-    double g;
 
     Vector3d Z;
 

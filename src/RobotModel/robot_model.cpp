@@ -128,6 +128,8 @@ VectorXd RobotModel::calcu_inv_dyn(const VectorXd q, const VectorXd qDot, const 
 
     P(dof) = Trans(0.0, 0.0, 0.0);
 
+    a(0) << 0, 0, g;
+
     for (unsigned int i=1; i<=dof; i++)
     {
         w(i) = R(i-1)*w(i-1)+qDot(i-1)*Z;

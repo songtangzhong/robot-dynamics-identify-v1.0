@@ -1,32 +1,41 @@
 #
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
-PROJECT(RobotDynamics)
+project(RobotDynamics)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
-SET(LIBRARY_INSTALL_PATH /usr/lib)
-SET(HEADERS_INSTALL_PATH /usr/include)
 
-INCLUDE_DIRECTORIES (
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(LIBRARY_INSTALL_PATH /usr/lib)
+set(HEADERS_INSTALL_PATH /usr/include)
+
+add_library(robotdynamics SHARED 
+  src/RobotModel/robot_model.cpp
+  src/RobotDynamics/robot_dynamics.cpp
+)
+target_include_directories(robotdynamics
+  PRIVATE 
+  include
 )
 
-SET(SRC_LIST
-    src/RobotModel/robot_model.cpp
+add_executable(test_robot_dynamics 
+  examples/test_robot_dynamics.cpp
+)
+target_include_directories(test_robot_dynamics 
+  PRIVATE 
+  include
+)
+target_link_libraries(test_robot_dynamics 
+  robotdynamics
 )
 
-ADD_LIBRARY(robotdynamics SHARED ${SRC_LIST})
+install(DIRECTORY include/
+  DESTINATION ${HEADERS_INSTALL_PATH}
+)
 
-INSTALL(TARGETS robotdynamics
+install(TARGETS robotdynamics
         LIBRARY DESTINATION ${LIBRARY_INSTALL_PATH})
-
-SET(HEADERS
-    include/RobotModel/robot_model.h
-)
-
-INSTALL(FILES ${HEADERS}
-        DESTINATION ${HEADERS_INSTALL_PATH}/RobotModel)
 
 
 
