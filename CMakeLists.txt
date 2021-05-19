@@ -6,14 +6,14 @@ PROJECT(RobotDynamics)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 SET(LIBRARY_INSTALL_PATH /usr/lib)
-SET(HEADERS_INSTALL_PATH /usr/include/RobotDynamics)
+SET(HEADERS_INSTALL_PATH /usr/include)
 
 INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 SET(SRC_LIST
-    src/robot_model.cpp
+    src/RobotModel/robot_model.cpp
 )
 
 ADD_LIBRARY(robotdynamics SHARED ${SRC_LIST})
@@ -22,11 +22,11 @@ INSTALL(TARGETS robotdynamics
         LIBRARY DESTINATION ${LIBRARY_INSTALL_PATH})
 
 SET(HEADERS
-    include/robot_model.h
+    include/RobotModel/robot_model.h
 )
 
 INSTALL(FILES ${HEADERS}
-        DESTINATION ${HEADERS_INSTALL_PATH})
+        DESTINATION ${HEADERS_INSTALL_PATH}/RobotModel)
 
 
 

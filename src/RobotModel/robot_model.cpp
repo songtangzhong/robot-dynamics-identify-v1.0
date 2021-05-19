@@ -1,4 +1,4 @@
-#include "robot_model.h"
+#include <RobotModel/robot_model.h>
 
 namespace robot_dyn
 {
