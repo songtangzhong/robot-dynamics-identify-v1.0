@@ -19,7 +19,7 @@ public:
 
     void InitModel(const unsigned int DOF);
 
-    void SetKinematicParameters(const MatrixXd param);
+    void SetKinematicsParameters(const MatrixXd param);
 
     void SetDynamicsParameters(const VectorXd param);
 
@@ -58,7 +58,7 @@ private:
     Matrix<Matrix3d,1,Dynamic> R_T;
 
     Matrix<Vector3d,1,Dynamic> w;
-    Matrix<Vector3d,1,Dynamic> dw;
+    Matrix<Vector3d,1,Dynamic> wDot;
     Matrix<Vector3d,1,Dynamic> a;
     Matrix<Vector3d,1,Dynamic> F;
     Matrix<Vector3d,1,Dynamic> f;
