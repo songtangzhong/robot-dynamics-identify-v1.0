@@ -1,0 +1,72 @@
+#ifndef ROBOT_MODEL_H_
+#define ROBOT_MODEL_H_
+
+#include <Eigen/Dense>
+
+using namespace Eigen;
+
+namespace robot_dyn
+{
+Matrix3d Rot(const double theta, const double alpha);
+
+Vector3d Trans(const double theta, const double d, const double r);
+
+class RobotModel
+{
+public:
+    RobotModel(){};
+    ~RobotModel(){};
+
+    void InitModel(const unsigned int DOF);
+
+    void SetKinematicParameters(const MatrixXd param);
+
+    void SetDynamicsParameters(const VectorXd param);
+
+    VectorXd calcu_inv_dyn(const VectorXd q, const VectorXd qDot, const VectorXd qDDot);
+
+private:
+    int dof;
+
+    // Standard D-H parameters
+    VectorXd theta;    // z rotation
+    VectorXd d;        // z translation
+    VectorXd alpha;    // x rotation
+    VectorXd r;        // x translation
+    VectorXd offset;
+
+    // [mi mrcxi mrcyi mrczi Ixxi Ixyi Ixzi Iyyi Iyzi Izzi]'
+    unsigned int Psi_num;
+
+    VectorXd m;
+
+    VectorXd mrcx; VectorXd mrcy; VectorXd mrcz;
+
+    VectorXd Ixx; VectorXd Ixy; VectorXd Ixz; VectorXd Iyy; VectorXd Iyz; VectorXd Izz;
+
+    double g;
+
+    Vector3d Z;
+
+    Matrix<Vector3d,1,Dynamic> mrc;
+
+    Matrix<Matrix3d,1,Dynamic> I;
+
+    Matrix<Vector3d,1,Dynamic> P; 
+
+    Matrix<Matrix3d,1,Dynamic> R;
+    Matrix<Matrix3d,1,Dynamic> R_T;
+
+    Matrix<Vector3d,1,Dynamic> w;
+    Matrix<Vector3d,1,Dynamic> dw;
+    Matrix<Vector3d,1,Dynamic> a;
+    Matrix<Vector3d,1,Dynamic> F;
+    Matrix<Vector3d,1,Dynamic> f;
+    Matrix<Vector3d,1,Dynamic> n;
+
+    VectorXd tau;
+};
+
+}
+
+#endif
