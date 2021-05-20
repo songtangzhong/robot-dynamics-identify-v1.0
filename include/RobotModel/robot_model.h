@@ -32,6 +32,20 @@ public:
     // [mi mrcxi mrcyi mrczi Ixxi Ixyi Ixzi Iyyi Iyzi Izzi]'
     unsigned int Psi_num;
 
+    unsigned int Ps_num;
+
+    VectorXi Ps_flag;
+
+    unsigned int Pb_num;
+
+    VectorXd qMin; VectorXd qMax; 
+    VectorXd qDotMin; VectorXd qDotMax; 
+    VectorXd qDDotMin; VectorXd qDDotMax;
+
+    MatrixXd R1;
+    MatrixXd R2;
+    double qr_threshold;
+
 private:
     // Standard D-H parameters
     VectorXd theta;    // z rotation

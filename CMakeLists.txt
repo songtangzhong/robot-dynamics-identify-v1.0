@@ -13,6 +13,7 @@ set(HEADERS_INSTALL_PATH /usr/include)
 add_library(robotdynamics SHARED 
   src/RobotModel/robot_model.cpp
   src/RobotDynamics/robot_dynamics.cpp
+  src/DynamicsIdentify/dynamics_identify.cpp
 )
 target_include_directories(robotdynamics
   PRIVATE 

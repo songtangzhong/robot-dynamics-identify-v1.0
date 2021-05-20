@@ -34,6 +34,21 @@ void RobotModel::InitModel(const unsigned int DOF)
 
     Psi_num = 10;
 
+    Ps_num = Psi_num*dof;
+
+    Ps_flag.resize(Ps_num);
+
+    Pb_num = 0;
+
+    qMin.resize(dof);
+    qMax.resize(dof);
+    qDotMin.resize(dof);
+    qDotMax.resize(dof);
+    qDDotMin.resize(dof);
+    qDDotMax.resize(dof);
+
+    qr_threshold = 1e-10;
+
     m.resize(dof);
 
     mrcx.resize(dof);

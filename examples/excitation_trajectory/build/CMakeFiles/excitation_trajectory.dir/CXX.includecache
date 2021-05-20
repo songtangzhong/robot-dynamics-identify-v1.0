@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/stz/RobotDynamics-v1.0/examples/excitation_trajectory/excitation_trajectory.cpp
+RobotModel/robot_model.h
+-
+DynamicsIdentify/dynamics_identify.h
+-
+nlopt.h
+-
+iostream
+-
+fstream
+-
+
